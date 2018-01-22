@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.IO;
 namespace Ksu.Cis300.TextEditor
 {
     /// <summary>
@@ -25,7 +25,14 @@ namespace Ksu.Cis300.TextEditor
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Error printing stuff
+        /// </summary>
+        /// <param name="e">the Thrown Exception</param>
+        private static void Error(Exception e)
+        {
+            MessageBox.Show("The following error occured: " + e);
+        }
         /// <summary>
         /// Handles a Click event on the "Open . . ." button.
         /// </summary>
@@ -33,9 +40,17 @@ namespace Ksu.Cis300.TextEditor
         /// <param name="e"></param>
         private void uxOpen_Click(object sender, EventArgs e)
         {
-            if (uxOpenDialog.ShowDialog() == DialogResult.OK)
+            try
             {
-                MessageBox.Show("Can't open file " + uxOpenDialog.FileName);
+                if (uxOpenDialog.ShowDialog() == DialogResult.OK)
+                {
+                    uxDisplay.Text = File.ReadAllText(uxOpenDialog.FileName);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Error(ex);
             }
         }
 
@@ -46,10 +61,24 @@ namespace Ksu.Cis300.TextEditor
         /// <param name="e"></param>
         private void uxSaveAs_Click(object sender, EventArgs e)
         {
-            if (uxSaveDialog.ShowDialog() == DialogResult.OK)
+            try
             {
-                MessageBox.Show("Can't write to file " + uxSaveDialog.FileName);
+                if (uxSaveDialog.ShowDialog() == DialogResult.OK)
+                {
+                    File.WriteAllText(uxSaveDialog.FileName, uxDisplay.Text);
+                   
+                }
             }
+            catch (Exception ex)
+            {
+
+                Error(ex);
+            }
+        }
+
+        private void uxDisplay_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

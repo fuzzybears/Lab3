@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.IO;
 namespace Ksu.Cis300.TextEditor
 {
     static class Program
@@ -18,5 +18,10 @@ namespace Ksu.Cis300.TextEditor
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new UserInterface());
         }
+        /// <summary>
+        /// Error printing
+        /// </summary>
+        /// <param name="e"></param>
+
     }
 }
